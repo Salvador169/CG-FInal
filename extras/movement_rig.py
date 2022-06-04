@@ -32,7 +32,7 @@ class MovementRig(Object3D):
         self.KEY_TURN_RIGHT = "e"
         self.KEY_LOOK_UP = "t"
         self.KEY_LOOK_DOWN = "g"
-        self.SHOOT = "space"
+        self.SHOOT = "mouse1"
         self.RELOAD = "r"
         self.shooting = False
         self.power = 0
@@ -56,6 +56,9 @@ class MovementRig(Object3D):
 
     def getPower(self):
         return self.power
+    
+    def setPower(self, power):
+        self.power = power
 
     def getInitalMatrix(self):
         return self.initial
@@ -74,7 +77,6 @@ class MovementRig(Object3D):
             self.power += 0.25
             if self.power > 100:
                 self.power=100
-            print(self.power)
         if input_object.is_key_up(self.SHOOT):
             self.shooting = True
             self.ready = False

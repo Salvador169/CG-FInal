@@ -19,7 +19,7 @@ class GameOver(Mesh):
 
         geometry1 = RectangleGeometry(0.75,0.25)
         message1 = TextTexture(text="You Lost",
-                               system_font_name="Algerian",
+                               font_file_name="fonts/ALGER.TTF",
                                background_color=[255,255,255,0],
                                font_size=40, font_color=[255, 255, 255],
                                image_width=768, image_height=256,
@@ -30,7 +30,7 @@ class GameOver(Mesh):
 
         geometry2 = RectangleGeometry(0.75,0.25)
         message2 = TextTexture(text="Press [R] to restart or [Esc] to quit",
-                               system_font_name="Algerian",
+                               font_file_name="fonts/ALGER.TTF",
                                background_color=[255,255,255,0],
                                font_size=32, font_color=[255, 255, 255],
                                image_width=768, image_height=256,
@@ -41,7 +41,7 @@ class GameOver(Mesh):
 
         geometry3 = RectangleGeometry(0.75,0.25)
         message3 = TextTexture(text="Game Over",
-                               system_font_name="Wide Latin",
+                               font_file_name ="fonts/Wide Latin Regular.ttf",
                                background_color=[255,255,255,0],
                                font_size=50, font_color=[255, 255, 255],
                                image_width=768, image_height=192,

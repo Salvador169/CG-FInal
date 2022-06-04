@@ -1,3 +1,4 @@
+import random
 import numpy as np
 import math
 import pathlib
@@ -54,7 +55,7 @@ class Example(Base):
         self.arrow.rotate_x(-math.pi/2, local=False)
 
 
-        geometry = RectangleGeometry(width = 1, height = 0.3)
+        geometry = RectangleGeometry(width = 0.5, height = 0.125)
         tile_set = Texture("images/energy_bar.png")
         sprite_material = SpriteMaterial(tile_set, {
             "billboard" : 1, 
@@ -62,7 +63,7 @@ class Example(Base):
             "tileNumber" : 0 
         })
 
-        geometry1 = RectangleGeometry(width = 1, height = 0.25)
+        geometry1 = RectangleGeometry(width = 0.5, height = 0.125)
         tile_set1 = Texture("images/arrow_number1.png")
         sprite_material1 = SpriteMaterial(tile_set1, {
             "billboard" : 1, 
@@ -70,26 +71,48 @@ class Example(Base):
             "tileNumber" : 0 
         })
 
+        geometry2 = RectangleGeometry(width = 0.5, height = 0.1)
+        tile_set2 = Texture("images/niveis.png")
+        sprite_material2 = SpriteMaterial(tile_set2, {
+            "billboard" : 1, 
+            "tileCount" : [1, 5],
+            "tileNumber" : 0 
+        })
+
+        geometry3 = RectangleGeometry(width = 0.15, height = 0.2)
+        tile_set3 = Texture("images/wind_colors.png")
+        sprite_material3 = SpriteMaterial(tile_set3, {
+            "billboard" : 1, 
+            "tileCount" : [3, 2],
+            "tileNumber" : 0 
+        })
+
         self.mainPage = MainPageMesh()
-        self.mainPage.set_position([10, 0, 100])
+        self.mainPage.set_position([10, 0, -100])
 
         self.instructions = InstructionsMesh()
-        self.instructions.set_position([7.5, 0, 100])
+        self.instructions.set_position([7.5, 0, -100])
 
         self.gameOver = GameOver()
-        self.gameOver.set_position([5, 0, 100])
+        self.gameOver.set_position([5, 0, -100])
 
         self.winning = Winning()
-        self.winning.set_position([2.5, 0, 100])
+        self.winning.set_position([2.5, 0, -100])
 
         self.sprite = Mesh(geometry, sprite_material)
-        self.sprite.set_position([1,-1,-2])
+        self.sprite.set_position([0.55,-0.45,-1])
         self.sprite1 = Mesh(geometry1, sprite_material1)
-        self.sprite1.set_position([1,-0.75,-2])
+        self.sprite1.set_position([0.55,-0.3,-1])
+        self.sprite2 = Mesh(geometry2, sprite_material2)
+        self.sprite2.set_position([0,0.55,-1])
+        self.sprite3 = Mesh(geometry3, sprite_material3)
+        self.sprite3.set_position([0,0.45,-1])
         self.rig.add(self.bow)
         self.rig.add(self.arrow)
         self.rig.add(self.sprite)
         self.rig.add(self.sprite1)
+        self.rig.add(self.sprite2)
+        self.rig.add(self.sprite3)
         self.rig.set_position([0, 0, 20])
         self.scene.add(self.rig)
 
@@ -97,9 +120,9 @@ class Example(Base):
         self.arrows.append(ArrowMesh())
         self.arrows.append(ArrowMesh())
         self.arrows.append(ArrowMesh())
-        self.arrows[0].set_position([-2, 0, 0])
-        self.arrows[1].set_position([-2, 2, 0])
-        self.arrows[2].set_position([2, 0, 0])
+        self.arrows[0].set_position([-2, 0, 100])
+        self.arrows[1].set_position([-2, 2, 100])
+        self.arrows[2].set_position([2, 0, 100])
 
         self.target = TargetMesh()
         self.target.translate(-2,0,0)
@@ -109,52 +132,52 @@ class Example(Base):
         self.tripe.translate(2,2,0)
 
         # NIVEL 1
-        self.sky_geometry = SphereGeometry(radius=25)
+        self.sky_geometry = SphereGeometry(radius=50)
         self.sky_material = TextureMaterial(texture=Texture(file_name="images/sky1.jpg"), property_dict={"doubleSide": True})
         self.sky = Mesh(self.sky_geometry, self.sky_material)
         self.scene.add(self.sky)
-        self.grass_geometry = RectangleGeometry(width=50, height=50)
+        self.grass_geometry = RectangleGeometry(width=100, height=100)
         self.grass_material = TextureMaterial(
             texture=Texture(file_name="images/stone.jpg"),
             property_dict={"repeatUV": [50, 50]}
         )
         self.grass = Mesh(self.grass_geometry, self.grass_material)
         self.grass.rotate_x(-math.pi/2)
-        self.grass.translate(0,0,-1.5)
+        self.grass.translate(0,0,-3)
         self.scene.add(self.grass)
         #=================================================
 
         #NIVEL 2
-        nether_sky_geometry = SphereGeometry(radius=25)
+        nether_sky_geometry = SphereGeometry(radius=50)
         nether_sky_material = TextureMaterial(texture=Texture(file_name="images/red_sky.jpg"), property_dict={"doubleSide": True})
         nether_sky = Mesh(nether_sky_geometry, nether_sky_material)
-        nether_sky.translate(51,0,0)
+        nether_sky.translate(101,0,0)
         self.scene.add(nether_sky)
-        nether_geometry = RectangleGeometry(width=50, height=50)
+        nether_geometry = RectangleGeometry(width=100, height=100)
         nether_material = TextureMaterial(
             texture=Texture(file_name="images/nether.jpg"),
             property_dict={"repeatUV": [50, 50]}
         )
         nether = Mesh(nether_geometry, nether_material)
         nether.rotate_x(-math.pi/2)
-        nether.translate(51,0,-1.5)
+        nether.translate(101,0,-3)
         self.scene.add(nether) 
         #=================================================
 
         #NIVEL 3
-        end_sky_geometry = SphereGeometry(radius=25)
+        end_sky_geometry = SphereGeometry(radius=50)
         end_sky_material = TextureMaterial(texture=Texture(file_name="images/end_sky.jpg"), property_dict={"doubleSide": True})
         end_sky = Mesh(end_sky_geometry, end_sky_material)
-        end_sky.translate(-51,0,0)
+        end_sky.translate(-101,0,0)
         self.scene.add(end_sky)
-        end_geometry = RectangleGeometry(width=50, height=50)
+        end_geometry = RectangleGeometry(width=100, height=100)
         end_material = TextureMaterial(
             texture=Texture(file_name="images/end.jpg"),
             property_dict={"repeatUV": [40, 40]}
         )
         end = Mesh(end_geometry, end_material)
         end.rotate_x(-math.pi/2)
-        end.translate(-51,0,-1.5)
+        end.translate(-101,0,-3)
         self.scene.add(end)
         #=================================================
 
@@ -175,24 +198,72 @@ class Example(Base):
 
         self.tiro = -1
         self.collision = False
-
+        self.win = False
+        self.wind = random.randint(1,2)
+        self.sprite3.material.uniform_dict["tileNumber"].data = self.wind
+        self.moveWind = 0
 
 
     def update(self):
-        self.cameraRig.update(self.input, self.delta_time*2)
+        
+        self.cameraRig.update(self.input, self.level, self.win)
         self.renderer.render(self.scene, self.camera)
+        if self.wind == 0:
+            self.moveWind = 0.1
+        elif self.wind == 1:
+            self.moveWind = -0.01
+        elif self.wind == 2:
+            self.moveWind = 0.01
+        elif self.wind == 3:
+            self.moveWind = 0.05
+        elif self.wind == 4:
+            self.moveWind = -0.1
+        elif self.wind == 5:
+            self.moveWind = -0.05
+
+        self.sprite2.material.uniform_dict["tileNumber"].data = self.level-1
         if self.cameraRig.isGame == True:
             self.rig.update(self.input, self.delta_time*2)
+            if self.level == 5:
+                self.rig.set_position([0,0,20])
+            if self.level == 2:
+                self.rig.set_position([50,0,20])
+            if self.level == 3:
+                self.rig.set_position([-50,0,20])
+            if self.level == 4:
+                self.rig.set_position([0,0,20])
+            if self.level == 5:
+                self.rig.set_position([0,0,20])
+            if self.level == 6:
+                self.level = 1
+                self.wind = random.randint(1,2)
+                self.sprite3.material.uniform_dict["tileNumber"].data = self.wind
             if self.lives == 0 and self.collision == True:
+                if self.level == 1:
+                    self.wind = np.random.choice(np.arange(0, 6), p=[0.1, 0.25, 0.25, 0.15, 0.1, 0.15])
+                elif self.level == 2:
+                    self.wind = np.random.choice(np.arange(0, 6), p=[0.1, 0.15, 0.15, 0.25, 0.1, 0.25])
+                elif self.level == 3:
+                    self.wind = np.random.choice(np.arange(0, 6), p=[0.2, 0.10, 0.10, 0.2, 0.2, 0.2])
+                elif self.level == 4:
+                    self.wind = np.random.choice(np.arange(0, 6), p=[0.3, 0, 0, 0.2, 0.3, 0.2])
                 self.rig._look_attachment.set_local_matrix(self.rig.getInitalMatrix())
-                self.cameraRig.set_position([5,0,80.75])
-                self.cameraRig.isGame == False
-                self.cameraRig.setPlay(False)
                 self.lives = 3
                 self.tiro = -1
                 self.level = self.level+1
+                self.arrows[0].set_position([-2, 0, 100])
+                self.arrows[1].set_position([-2, 2, 100])
+                self.arrows[2].set_position([2, 0, 100])
+                
+                self.sprite3.material.uniform_dict["tileNumber"].data = self.wind
             if self.rig.isShooting() == True and self.shooting == False:
-                print("ola")
+                # self.tiro = self.tiro+1
+                self.shooting = True
+                self.arrows[self.tiro].set_local_matrix(self.arrow.global_matrix)
+                self.rig._look_attachment.children_list[2].set_position([-0.175,0,5])
+                self.lives = self.lives-1
+                self.collision = False
+            
             if self.rig.isShooting() == True and self.shooting == True:
                 if self.rig.getPower() < 5:
                     self.angle = self.angle + 1/self.rig.getPower()*0.1
@@ -200,8 +271,7 @@ class Example(Base):
                     self.angle = self.angle + 1/self.rig.getPower()*0.5
                 else:
                     self.angle = self.angle + 1/self.rig.getPower()*1
-                self.arrows[self.tiro].translate(0,self.rig.getPower()*0.01,math.cos(self.angle)-1)
-
+                self.arrows[self.tiro].translate(self.moveWind,self.rig.getPower()*0.01,math.cos(self.angle)-1)
             else:
                 self.shooting = False
                 self.angle = 0
@@ -212,12 +282,49 @@ class Example(Base):
                 self.sprite1.material.uniform_dict["tileNumber"].data = tileNumber1
                 self.rig.update(self.input, self.delta_time)
         else:
+            
             self.rig._look_attachment.set_local_matrix(self.rig.getInitalMatrix())
+        
 
-        # print(self.arrows[self.tiro].global_position[2])
-        if self.arrows[self.tiro].global_position[1] < self.grass.global_position[1]+0.175:
+
+        #COLLISION
+        arrowX= self.arrows[self.tiro].global_position[0]
+        arrowY= self.arrows[self.tiro].global_position[2]  
+        arrowZ= self.arrows[self.tiro].global_position[1]
+        
+        targetCenterX=self.target.global_position[0]
+        targetCenterY=self.target.global_position[1]
+        targetCenterZ=self.target.global_position[2]
+        
+        list1= [targetCenterX,targetCenterY,targetCenterZ]
+        list2= [arrowX,arrowY,arrowZ]
+        vector1=np.array(list1)
+        vector2=np.array(list2)
+        
+        raioCircunferencia=0.8
+        
+        
+        dist1= math.sqrt(abs((vector2[0]-vector1[0])*(vector2[0]-vector1[1])+(vector2[1]-vector1[1])*(vector2[1]-vector1[1]) +(vector2[2]-vector1[2])*(vector2[2]-vector1[2])-raioCircunferencia*raioCircunferencia))
+
+        yMax = 2
+        yMin = 0.052
+        zPlane = 2.9
+
+
+        if ( dist1 <= 0.93  and zPlane >= arrowZ and yMin<arrowY<yMax):
             self.rig.setShooting(False)
             self.collision = True
+            if self.tiro < 2:
+                self.tiro = self.tiro + 1
+                self.rig.setPower(0)
+
+        if self.arrows[self.tiro].global_position[1] < -3+0.175:
+            self.rig.setShooting(False)
+            self.collision = True
+            if self.tiro < 2:
+                self.tiro = self.tiro + 1
+                self.rig.setPower(0)
+        #==============================
 
         
 

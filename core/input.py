@@ -61,8 +61,21 @@ class Input:
                 key_name = pygame.key.name(event.key)
                 self._key_down_list.append(key_name)
                 self._key_pressed_list.append(key_name)
-                # print(key_name)
             if event.type == pygame.KEYUP:
                 key_name = pygame.key.name(event.key)
+                self._key_pressed_list.remove(key_name)
+                self._key_up_list.append(key_name)
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if event.button == 1:
+                    key_name = "mouse1"
+                else:
+                    key_name = "mouse2"
+                self._key_down_list.append(key_name)
+                self._key_pressed_list.append(key_name)
+            if event.type == pygame.MOUSEBUTTONUP:
+                if event.button == 1:
+                    key_name = "mouse1"
+                else:
+                    key_name = "mouse2"
                 self._key_pressed_list.remove(key_name)
                 self._key_up_list.append(key_name)
