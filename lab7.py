@@ -125,11 +125,11 @@ class Example(Base):
         self.arrows[2].set_position([2, 0, 100])
 
         self.target = TargetMesh()
-        self.target.translate(-2,0,0)
         self.target.rotate_x(math.pi/2)
+        self.target.translate(-0.1,0.3,0.4) #x->translacao , y->altitude , z->profundidade
 
         self.tripe = TripeMesh()
-        self.tripe.translate(2,2,0)
+        self.tripe.translate(-0.75,-0.9,0)
 
         # NIVEL 1
         self.sky_geometry = SphereGeometry(radius=50)
@@ -138,20 +138,54 @@ class Example(Base):
         self.scene.add(self.sky)
         self.grass_geometry = RectangleGeometry(width=100, height=100)
         self.grass_material = TextureMaterial(
-            texture=Texture(file_name="images/stone.jpg"),
+            texture=Texture(file_name="images/grass.jpg"),
             property_dict={"repeatUV": [50, 50]}
         )
         self.grass = Mesh(self.grass_geometry, self.grass_material)
         self.grass.rotate_x(-math.pi/2)
-        self.grass.translate(0,0,-3)
+        self.grass.translate(0,0,-1.5)
         self.scene.add(self.grass)
         #=================================================
 
-        #NIVEL 2
+        # NIVEL 2
+        self.sky_geometry1 = SphereGeometry(radius=50)
+        self.sky_material1 = TextureMaterial(texture=Texture(file_name="images/sky1.jpg"), property_dict={"doubleSide": True})
+        self.sky1 = Mesh(self.sky_geometry1, self.sky_material1)
+        self.sky1.translate(101,0,0)
+        self.scene.add(self.sky1)
+        self.grass_geometry1 = RectangleGeometry(width=100, height=100)
+        self.grass_material1 = TextureMaterial(
+            texture=Texture(file_name="images/sand.jpg"),
+            property_dict={"repeatUV": [50, 50]}
+        )
+        self.grass1 = Mesh(self.grass_geometry1, self.grass_material1)
+        self.grass1.rotate_x(-math.pi/2)
+        self.grass1.translate(101,0,-3)
+        self.scene.add(self.grass1)
+        #=================================================
+
+        # NIVEL 3
+        self.sky_geometry2 = SphereGeometry(radius=50)
+        self.sky_material2 = TextureMaterial(texture=Texture(file_name="images/night.jpg"), property_dict={"doubleSide": True})
+        self.sky2 = Mesh(self.sky_geometry2, self.sky_material2)
+        self.sky2.translate(-101,0,0)
+        self.scene.add(self.sky2)
+        self.grass_geometry2 = RectangleGeometry(width=100, height=100)
+        self.grass_material2 = TextureMaterial(
+            texture=Texture(file_name="images/grass.jpg"),
+            property_dict={"repeatUV": [50, 50]}
+        )
+        self.grass2 = Mesh(self.grass_geometry2, self.grass_material2)
+        self.grass2.rotate_x(-math.pi/2)
+        self.grass2.translate(-101,0,-3)
+        self.scene.add(self.grass2)
+        #=================================================
+
+        #NIVEL 4
         nether_sky_geometry = SphereGeometry(radius=50)
         nether_sky_material = TextureMaterial(texture=Texture(file_name="images/red_sky.jpg"), property_dict={"doubleSide": True})
         nether_sky = Mesh(nether_sky_geometry, nether_sky_material)
-        nether_sky.translate(101,0,0)
+        nether_sky.translate(202,0,0)
         self.scene.add(nether_sky)
         nether_geometry = RectangleGeometry(width=100, height=100)
         nether_material = TextureMaterial(
@@ -160,15 +194,15 @@ class Example(Base):
         )
         nether = Mesh(nether_geometry, nether_material)
         nether.rotate_x(-math.pi/2)
-        nether.translate(101,0,-3)
+        nether.translate(202,0,-3)
         self.scene.add(nether) 
         #=================================================
 
-        #NIVEL 3
+        #NIVEL 5
         end_sky_geometry = SphereGeometry(radius=50)
         end_sky_material = TextureMaterial(texture=Texture(file_name="images/end_sky.jpg"), property_dict={"doubleSide": True})
         end_sky = Mesh(end_sky_geometry, end_sky_material)
-        end_sky.translate(-101,0,0)
+        end_sky.translate(-202,0,0)
         self.scene.add(end_sky)
         end_geometry = RectangleGeometry(width=100, height=100)
         end_material = TextureMaterial(
@@ -177,7 +211,7 @@ class Example(Base):
         )
         end = Mesh(end_geometry, end_material)
         end.rotate_x(-math.pi/2)
-        end.translate(-101,0,-3)
+        end.translate(-202,0,-3)
         self.scene.add(end)
         #=================================================
 
@@ -227,13 +261,13 @@ class Example(Base):
             if self.level == 5:
                 self.rig.set_position([0,0,20])
             if self.level == 2:
-                self.rig.set_position([50,0,20])
+                self.rig.set_position([100,0,20])
             if self.level == 3:
-                self.rig.set_position([-50,0,20])
+                self.rig.set_position([-100,0,20])
             if self.level == 4:
-                self.rig.set_position([0,0,20])
+                self.rig.set_position([200,0,20])
             if self.level == 5:
-                self.rig.set_position([0,0,20])
+                self.rig.set_position([-200,0,20])
             if self.level == 6:
                 self.level = 1
                 self.wind = random.randint(1,2)
@@ -251,6 +285,7 @@ class Example(Base):
                 self.lives = 3
                 self.tiro = -1
                 self.level = self.level+1
+                self.rig.set_position([0,0,20])
                 self.arrows[0].set_position([-2, 0, 100])
                 self.arrows[1].set_position([-2, 2, 100])
                 self.arrows[2].set_position([2, 0, 100])

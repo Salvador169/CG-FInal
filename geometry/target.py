@@ -71,4 +71,6 @@ class TargetMesh(Mesh):
         self.add(self.mesh10)
         self.add(self.mesh11)
         self.add(self.mesh12)
+
+        self.scale(0.675)
         

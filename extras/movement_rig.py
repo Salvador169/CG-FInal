@@ -74,7 +74,7 @@ class MovementRig(Object3D):
         if input_object.is_key_pressed(self.KEY_MOVE_RIGHT):
             self.translate(move_amount, 0, 0)
         if input_object.is_key_pressed(self.SHOOT):
-            self.power += 0.25
+            self.power += 0.5
             if self.power > 100:
                 self.power=100
         if input_object.is_key_up(self.SHOOT):
